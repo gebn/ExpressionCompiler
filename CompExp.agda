@@ -8,17 +8,25 @@ open import Relation.Binary.PropositionalEquality renaming ([_] to ⟪_⟫)
 open import Data.Maybe
 open import Data.String renaming (_++_ to _^_)
 
+{- The various types of instruction that our interpreter can execute. -}
 data Instr : Set where
-  Var  : String → Instr
-  Val  : ℕ → Instr
-  Add  : Instr
-  Sub  : Instr
-  Joz  : ℕ → Instr
-  Err  : Instr
+  Var : String → Instr -- a variable name
+  Val : ℕ → Instr      -- a literal value
+  Add : Instr
+  Sub : Instr
+  Joz : ℕ → Instr      -- jump on zero
+  Err : Instr
 
+{- A program is simply a list of instructions. -}
 Program = List Instr
-Stack   = List ℕ
-State   = String → Maybe ℕ
+
+{- The stack is a list of natural numbers, with the head at the front.
+   Instructions remove and add elements to the stack as required. -}
+Stack = List ℕ
+
+{- The program state holds variable values.
+   Providing a variable name as a string returns its value, or nothing if the variable is not defined. -}
+State = String → Maybe ℕ
 
 ⟨⟨_⟩⟩_,_,_ : Program → Stack → State → ℕ → Maybe Stack
 ⟨⟨ [] ⟩⟩ s , _ , _                         = just s
