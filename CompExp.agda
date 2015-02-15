@@ -42,13 +42,13 @@ State = String → Maybe ℕ
 ⟨⟨ Joz _ ∷ p ⟩⟩ (suc _ ∷ s) , σ , suc k    = ⟨⟨ p ⟩⟩ s , σ , k           -- jump on zero, but the head of the stack is not zero, so just ignore the instruction and continue
 ⟨⟨ _ ⟩⟩ _ , _ , _ = nothing                                               -- any other scenario is an error (e.g. an empty stack when asked to do addition)
 
-
+{- The recursive type of arithmetic expressions. -}
 data Exp : (A : Set) → Set where
-  B   : 𝔹 → Exp 𝔹
-  N   : ℕ → Exp ℕ
-  V   : String → Exp ℕ
-  _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ
-  if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ
+  B   : 𝔹 → Exp 𝔹                              -- boolean
+  N   : ℕ → Exp ℕ                               -- natural number (linked to Val)
+  V   : String → Exp ℕ                          -- variable (linked to Var)
+  _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ                   -- addition
+  if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ -- if/else flow control statement
 infixl 5 _⊕_
 
 
