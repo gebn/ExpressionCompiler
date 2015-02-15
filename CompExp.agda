@@ -47,7 +47,7 @@ data Exp : (A : Set) → Set where
   B   : 𝔹 → Exp 𝔹                              -- boolean
   N   : ℕ → Exp ℕ                               -- natural number (linked to Val)
   V   : String → Exp ℕ                          -- variable (linked to Var)
-  _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ                   -- addition
+  _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ                   -- addition (linked to Add)
   if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ -- if/else flow control statement
 infixl 5 _⊕_
 
@@ -65,11 +65,12 @@ infixl 5 _⊕_
 ...  | nothing      = nothing             -- evaluation of the condition failed - fail ourselves
 ⟦ _ ⟧ _ = nothing                        -- any other scenario is an error (e.g. a boolean expression on its own)
 
+{- Turns an expression construct into an executable program. -}
 compile : ∀ {T} → Exp T → Program
-compile (N n)    = [ Val n ]
-compile (V s)    = [ Var s ]
-compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
-compile E        = [ Err ]
+compile (N n)    = [ Val n ]                            -- raw values map to a single instruction
+compile (V s)    = [ Var s ]                            -- as do variable names
+compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ] -- the operand goes after the arguments as the instruction list is executed in-order
+compile E        = [ Err ]                              -- everything else at the top level is an error
 
 {-
 Proves that executing a compiled expression and evaluating that same expression 
