@@ -8,19 +8,19 @@ open import Relation.Binary.PropositionalEquality renaming ([_] to ⟪_⟫)
 open import Data.Maybe
 open import Data.String renaming (_++_ to _^_)
 
-data instr : Set where
-  Var  : String → instr
-  Val  : ℕ → instr
-  Add  : instr
-  Sub  : instr
-  Joz  : ℕ → instr
-  Err  : instr
+data Instr : Set where
+  Var  : String → Instr
+  Val  : ℕ → Instr
+  Add  : Instr
+  Sub  : Instr
+  Joz  : ℕ → Instr
+  Err  : Instr
 
-program = List instr
-stack   = List ℕ
-state   = String → Maybe ℕ
+Program = List Instr
+Stack   = List ℕ
+State   = String → Maybe ℕ
 
-⟨⟨_⟩⟩_,_,_ : program → stack → state → ℕ → Maybe stack
+⟨⟨_⟩⟩_,_,_ : Program → Stack → State → ℕ → Maybe Stack
 ⟨⟨ [] ⟩⟩ s , _ , _                         = just s
 ⟨⟨ _ ⟩⟩ s , _ , zero                       = just s
 ⟨⟨ Val x ∷ p ⟩⟩ s , σ , suc k              = ⟨⟨ p ⟩⟩ (x ∷ s) , σ , k
@@ -50,7 +50,7 @@ data Exp : (A : Set) → Set where
 infixl 5 _⊕_
 
 
-⟦_⟧ : ∀ {T} → Exp T → state → Maybe ℕ
+⟦_⟧ : ∀ {T} → Exp T → State → Maybe ℕ
 ⟦ N(v) ⟧ σ = just v
 ⟦ V(s) ⟧ σ = σ s
 ⟦ E ⊕ E' ⟧ σ = ⟦ E ⟧ σ +' ⟦ E' ⟧ σ where
@@ -68,7 +68,7 @@ e0 =  N(1) ⊕ N(1) ⊕ V("x")
 x0 = ⟦ e0 ⟧ (λ v → nothing)
 x1 = ⟦ e0 ⟧ (λ v → just 1)
 
-compile : ∀ {T} → Exp T → program
+compile : ∀ {T} → Exp T → Program
 compile (N n)    = [ Val n ]
 compile (V s)    = [ Var s ]
 compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
@@ -93,7 +93,7 @@ More verbosely: if, at the end of compiling and executing an expression, the sta
 contains a single number, the result of evaluating the raw expression using the same 
 state will result in the same number.
 -}
-sound : (T : Set) (e : Exp T) (p : program) (n : ℕ)(σ : state) (k : ℕ) →
+sound : (T : Set) (e : Exp T) (p : Program) (n : ℕ)(σ : State) (k : ℕ) →
         ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
 sound = {!!}
 
@@ -104,7 +104,7 @@ More verbosely: if the result of evaluating an expression is n, there exists a
 number of steps k, that when the same expression is compiled and evaluated over k 
 steps, will produce the result n.
 -}
-adeq : (T : Set) (e : Exp T) (p : program) (σ : state) (n : ℕ) →
+adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
 adeq = {!!}
 
@@ -112,6 +112,6 @@ adeq = {!!}
 Identical to adeq above, except that if the result of evaluation is nothing, there 
 exists a number of execution steps after which the result will also be nothing.
 -}
-adeq-fail : (T : Set) (e : Exp T) (p : program) (σ : state) (n : ℕ) →
+adeq-fail : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ nothing → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ nothing)
 adeq-fail = {!!}
