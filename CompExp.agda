@@ -48,14 +48,7 @@ data Exp : (A : Set) → Set where
   N   : ℕ → Exp ℕ
   V   : String → Exp ℕ
   _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ
--- 1. minus,
--- 2. and, or, not
--- ≤ ≥ =
   if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ
--- 3. if then else, short-cut logical operators
--- 4. times, divide (short-cut?) ... we have no loops though! how would you extend the machine?
---           simple extension : more operations (boring)
---           complex extension : more control
 infixl 5 _⊕_
 
 
@@ -73,27 +66,11 @@ infixl 5 _⊕_
 ...  | nothing      = nothing
 ⟦ _ ⟧ _ = nothing
 
-e0 =  N(1) ⊕ N(1) ⊕ V("x")
-x0 = ⟦ e0 ⟧ (λ v → nothing)
-x1 = ⟦ e0 ⟧ (λ v → just 1)
-
 compile : ∀ {T} → Exp T → Program
 compile (N n)    = [ Val n ]
 compile (V s)    = [ Var s ]
 compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
 compile E        = [ Err ]
-
-x2 = ⟨⟨ compile e0 ⟩⟩ [] , (λ v → just 1) , 10
-{-
-Example
-  << Val 1 ∷ Val 1 ∷ Add ∷ Var "x" ∷ Add ∷ [] >> [] --->
-  << Val 1 ∷ Add ∷ Var "x" ∷ Add ∷ [] >> [1] -->
-  << Add ∷ Var "x" ∷ Add ∷ [] >> [1::1] -->
-  << Var "x" ∷ Add ∷ [] >> [2] -->
-  << Add ∷ [] >> [1::2] -->
-  << [] >> [3] -->
-  just [3]
--}
 
 {-
 Proves that executing a compiled expression and evaluating that same expression 
