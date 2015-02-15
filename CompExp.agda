@@ -53,15 +53,15 @@ infixl 5 _⊕_
 
 {- Evaluates an expression and returns the result, or nothing if an error occured. -}
 ⟦_⟧ : ∀ {T} → Exp T → State → Maybe ℕ
-⟦ N(v) ⟧ σ = just v                       -- a literal value trivially evaluates to itself
+⟦ N(v) ⟧ _ = just v                       -- a literal value trivially evaluates to itself
 ⟦ V(s) ⟧ σ = σ s                          -- a variable name - look up its value in the state
 ⟦ E ⊕ E' ⟧ σ = ⟦ E ⟧ σ +' ⟦ E' ⟧ σ where -- recursively evaluate each side of the operator (N.B. states are identical)
   _+'_ : Maybe ℕ → Maybe ℕ → Maybe ℕ
   just m +' just n = just (m + n)         -- if both sides returned a value, the result is simply the sum of them
-  _      +'      _ = nothing              -- otherwise halt evaluation and return an error
+  _      +' _      = nothing              -- otherwise halt evaluation and return an error
 ⟦ if E then E′ else E″ ⟧ σ with ⟦ E ⟧ σ   -- evaluate the condition
 ...  | just zero    = ⟦ E″ ⟧ σ            -- zero is equivalent to false - return the evaluation of the 'else' block
-...  | just (suc _) = ⟦ E′ ⟧ σ            -- all other non-error values evaluate to true - evaluate and return the 'if' block
+...  | just _       = ⟦ E′ ⟧ σ            -- all other non-error values evaluate to true - evaluate and return the 'if' block
 ...  | nothing      = nothing             -- evaluation of the condition failed - fail ourselves
 ⟦ _ ⟧ _ = nothing                        -- any other scenario is an error (e.g. a boolean expression on its own)
 
@@ -70,7 +70,7 @@ compile : ∀ {T} → Exp T → Program
 compile (N n)    = [ Val n ]                            -- raw values map to a single instruction
 compile (V s)    = [ Var s ]                            -- as do variable names
 compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ] -- the operand goes after the arguments as the instruction list is executed in-order
-compile E        = [ Err ]                              -- everything else at the top level is an error
+compile _        = [ Err ]                              -- everything else at the top level is an error
 
 {-
 Proves that executing a compiled expression and evaluating that same expression 
