@@ -2,7 +2,7 @@ module CompExp where
 
 open import Data.Nat
 open import Data.Bool renaming (Bool to 𝔹; _∧_ to oldand)
-open import Data.List 
+open import Data.List
 open import Data.Product
 open import Relation.Binary.PropositionalEquality renaming ([_] to ⟪_⟫)
 open import Data.Maybe
@@ -18,29 +18,29 @@ data instr : Set where
 
 program = List instr
 stack   = List ℕ
-state   = String → Maybe ℕ 
+state   = String → Maybe ℕ
 
-⟨⟨_⟩⟩_,_,_ : program → stack → state → ℕ → Maybe stack 
+⟨⟨_⟩⟩_,_,_ : program → stack → state → ℕ → Maybe stack
 ⟨⟨ [] ⟩⟩ s , _ , _                         = just s
 ⟨⟨ _ ⟩⟩ s , _ , zero                       = just s
-⟨⟨ Val x ∷ p ⟩⟩ s , σ , suc k              = ⟨⟨ p ⟩⟩ (x ∷ s) , σ , k 
+⟨⟨ Val x ∷ p ⟩⟩ s , σ , suc k              = ⟨⟨ p ⟩⟩ (x ∷ s) , σ , k
 ⟨⟨ Var x ∷ p ⟩⟩ s , σ , suc k with σ x
-...                            | just v  = ⟨⟨ p ⟩⟩ (v ∷ s) , σ , k 
+...                            | just v  = ⟨⟨ p ⟩⟩ (v ∷ s) , σ , k
 ...                            | nothing = nothing
 ⟨⟨ Add ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k      = ⟨⟨ p ⟩⟩ (m + n ∷ s) , σ , k
 ⟨⟨ Sub ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k      = ⟨⟨ p ⟩⟩ (m ∸ n ∷ s) , σ , k
 ⟨⟨ Joz n ∷ p ⟩⟩ (zero  ∷ s) , σ , suc k    = ⟨⟨ drop n p ⟩⟩ s , σ , k
 ⟨⟨ Joz _ ∷ p ⟩⟩ (suc _ ∷ s) , σ , suc k    = ⟨⟨ p ⟩⟩ s , σ , k
-⟨⟨ _ ⟩⟩ _ , _ , _ = nothing 
+⟨⟨ _ ⟩⟩ _ , _ , _ = nothing
 
 
 data Exp : (A : Set) → Set where
   B   : 𝔹 → Exp 𝔹
   N   : ℕ → Exp ℕ
-  V   : String → Exp ℕ 
+  V   : String → Exp ℕ
   _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ
 -- 1. minus,
--- 2. and, or, not 
+-- 2. and, or, not
 -- ≤ ≥ =
   if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ
 -- 3. if then else, short-cut logical operators
@@ -87,14 +87,13 @@ Example
 -}
 
 sound : (T : Set) (e : Exp T) (p : program) (n : ℕ)(σ : state) (k : ℕ) →
-        ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n 
+        ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
 sound = {!!}
-              
+
 adeq : (T : Set) (e : Exp T) (p : program) (σ : state) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
 adeq = {!!}
-              
+
 adeq-fail : (T : Set) (e : Exp T) (p : program) (σ : state) (n : ℕ) →
         ⟦ e ⟧ σ ≡ nothing → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ nothing)
 adeq-fail = {!!}
-              
