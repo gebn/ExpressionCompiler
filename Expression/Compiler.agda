@@ -17,5 +17,8 @@ compile (V s)    = [ Var s ]
 -- the operand goes after the arguments as the instruction list is executed in-order
 compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
 
+-- same as the arguments for the addition
+compile (E ⊝ E') = (compile E ++ compile E') ++ [ Sub ] 
+
 -- everything else at the top level is an error
 compile _        = [ Err ]
