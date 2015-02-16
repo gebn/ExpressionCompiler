@@ -8,15 +8,9 @@ open import Relation.Binary.PropositionalEquality renaming ([_] to ⟪_⟫)
 open import Data.Maybe
 open import Data.String renaming (_++_ to _^_)
 
-open import Interpreter.Executor
+open import Expression.Compiler
 open import Expression.Evaluator
-
-{- Turns an expression construct into an executable program. -}
-compile : ∀ {T} → Exp T → Program
-compile (N n)    = [ Val n ]                            -- raw values map to a single instruction
-compile (V s)    = [ Var s ]                            -- as do variable names
-compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ] -- the operand goes after the arguments as the instruction list is executed in-order
-compile _        = [ Err ]                              -- everything else at the top level is an error
+open import Interpreter.Executor
 
 {-
 Proves that executing a compiled expression and evaluating that same expression 
