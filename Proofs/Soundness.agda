@@ -21,7 +21,8 @@ sound : (T : Set) (e : Exp T) (p : Program) (n : ℕ) (σ : State) (k : ℕ) →
         ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
 
 -- booleans
-sound .𝔹 (B x) p n σ k eq = {!!}
+sound .𝔹 (B x) p n σ zero ()    -- just [] ≡ just (n ∷ []) is false
+sound .𝔹 (B x) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
 
 -- naturals
 sound .ℕ (N x) p n σ k eq = {!!}
