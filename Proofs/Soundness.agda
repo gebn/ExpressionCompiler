@@ -21,14 +21,14 @@ sound : (T : Set) (e : Exp T) (p : Program) (n : ℕ) (σ : State) (k : ℕ) →
         ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
 
 -- booleans
-sound .𝔹 (B x) p n σ zero ()    -- just [] ≡ just (n ∷ []) is false
-sound .𝔹 (B x) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
+sound .𝔹 (B _) _ _ _ zero ()    -- just [] ≡ just (n ∷ []) is false
+sound .𝔹 (B _) _ _ _ (suc _) () -- nothing ≡ just (n ∷ []) is false
 
 -- naturals
-sound .ℕ (N x) p n σ zero ()                          -- just [] ≡ just n is false
-sound .ℕ (N zero) p zero σ (suc k) eq = refl          -- just 0 ≡ just 0 is trivially correct
-sound .ℕ (N zero) p (suc n) σ (suc k) ()              -- just (0 ∷ []) ≡ just (suc n ∷ []) is false
-sound .ℕ (N (suc x)) p .(suc x) σ (suc k) refl = refl -- just (suc x) ≡ just (suc x) is trivially correct
+sound .ℕ (N _) _ _ _ zero ()                          -- just [] ≡ just n is false
+sound .ℕ (N zero) _ zero _ (suc _) _ = refl          -- just 0 ≡ just 0 is trivially correct
+sound .ℕ (N zero) _ (suc _) _ (suc _) ()              -- just (0 ∷ []) ≡ just (suc n ∷ []) is false
+sound .ℕ (N (suc _)) _ .(suc _) _ (suc _) refl = refl -- just (suc x) ≡ just (suc x) is trivially correct
 
 -- variables
 sound .ℕ (V x) p n σ k eq = {!!}
