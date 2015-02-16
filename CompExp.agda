@@ -9,15 +9,7 @@ open import Data.Maybe
 open import Data.String renaming (_++_ to _^_)
 
 open import Interpreter.Executor
-
-{- The recursive type of arithmetic expressions. -}
-data Exp : (A : Set) → Set where
-  B   : 𝔹 → Exp 𝔹                              -- boolean
-  N   : ℕ → Exp ℕ                               -- natural number (linked to Val)
-  V   : String → Exp ℕ                          -- variable (linked to Var)
-  _⊕_ : Exp ℕ → Exp ℕ → Exp ℕ                   -- addition (linked to Add)
-  if_then_else : Exp 𝔹 → Exp ℕ → Exp ℕ → Exp ℕ -- if/else flow control statement
-infixl 5 _⊕_
+open import Expression.Blocks
 
 {- Evaluates an expression and returns the result, or nothing if an error occured. -}
 ⟦_⟧ : ∀ {T} → Exp T → State → Maybe ℕ
