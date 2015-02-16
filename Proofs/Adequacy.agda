@@ -20,7 +20,7 @@ steps, will produce the result n.
 -}
 adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
-adeq .𝔹 (B x) p σ n eq = {!!}
+adeq .𝔹 (B _) _ _ _ () -- nothing ≡ just n is false
 adeq .ℕ (N x) p σ n eq = {!!}
 adeq .ℕ (V x) p σ n eq = {!!}
 adeq .ℕ (e ⊕ e₁) p σ n eq = {!!}
