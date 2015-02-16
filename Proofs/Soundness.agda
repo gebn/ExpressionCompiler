@@ -1,5 +1,6 @@
 module Proofs.Soundness where
 
+open import Data.Bool renaming (Bool to 𝔹)
 open import Data.List
 open import Data.Maybe
 open import Data.Nat
@@ -18,4 +19,18 @@ state will result in the same number.
 -}
 sound : (T : Set) (e : Exp T) (p : Program) (n : ℕ) (σ : State) (k : ℕ) →
         ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
-sound = {!!}
+
+-- booleans
+sound .𝔹 (B x) p n σ k eq = {!!}
+
+-- naturals
+sound .ℕ (N x) p n σ k eq = {!!}
+
+-- variables
+sound .ℕ (V x) p n σ k eq = {!!}
+
+-- addition
+sound .ℕ (e ⊕ e₁) p n σ k eq = {!!}
+
+-- if/else
+sound .ℕ (if_then_else e e₁ e₂) p n σ k eq = {!!}
