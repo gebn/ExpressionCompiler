@@ -1,5 +1,6 @@
 module Proofs.Adequacy where
 
+open import Data.Bool renaming (Bool to 𝔹)
 open import Data.List
 open import Data.Maybe
 open import Data.Nat
@@ -19,7 +20,11 @@ steps, will produce the result n.
 -}
 adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
-adeq = {!!}
+adeq .𝔹 (B x) p σ n eq = {!!}
+adeq .ℕ (N x) p σ n eq = {!!}
+adeq .ℕ (V x) p σ n eq = {!!}
+adeq .ℕ (e ⊕ e₁) p σ n eq = {!!}
+adeq .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
 {-
 Identical to adeq above, except that if the result of evaluation is nothing, there
