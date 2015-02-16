@@ -8,18 +8,7 @@ open import Relation.Binary.PropositionalEquality renaming ([_] to ⟪_⟫)
 open import Data.Maybe
 open import Data.String renaming (_++_ to _^_)
 
-open import Interpreter.Instructions
-
-{- A program is simply a list of instructions. -}
-Program = List Instr
-
-{- The stack is a list of natural numbers, with the head at the front.
-   Instructions remove and add elements to the stack as required. -}
-Stack = List ℕ
-
-{- The program state holds variable values.
-   Providing a variable name as a string returns its value, or nothing if the variable is not defined. -}
-State = String → Maybe ℕ
+open import Interpreter.Runtime
 
 {- Executes a program, returning the final state of its stack, or nothing if an error occurred. -}
 ⟨⟨_⟩⟩_,_,_ : Program → Stack → State → ℕ → Maybe Stack
