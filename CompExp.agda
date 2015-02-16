@@ -13,17 +13,6 @@ open import Expression.Evaluator
 open import Interpreter.Executor
 
 {-
-Proves that executing a compiled expression and evaluating that same expression 
-produce the same output.
-More verbosely: if, at the end of compiling and executing an expression, the stack 
-contains a single number, the result of evaluating the raw expression using the same 
-state will result in the same number.
--}
-sound : (T : Set) (e : Exp T) (p : Program) (n : ℕ)(σ : State) (k : ℕ) →
-        ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ] → ⟦ e ⟧ σ ≡ just n
-sound = {!!}
-
-{-
 Proves that if an expression evaluates to a given value n, it can be compiled and 
 executed up to a point at which the result will be equal to n.
 More verbosely: if the result of evaluating an expression is n, there exists a 
