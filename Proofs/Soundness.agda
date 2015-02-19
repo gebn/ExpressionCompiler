@@ -31,10 +31,20 @@ sound .ℕ (N zero)    _ (suc _)  _ (suc _) ()          -- just (0 ∷ []) ≡ j
 sound .ℕ (N (suc _)) _ .(suc _) _ (suc _) refl = refl -- just (suc x) ≡ just (suc x) is trivially correct
 
 -- variables
-sound .ℕ (V x) p n σ k eq = {!!}
+sound .ℕ (V x) p zero σ zero ()
+sound .ℕ (V x) p zero σ (suc k) eq with σ x
+sound .ℕ (V x) p zero σ (suc k) refl | just .0 = refl
+sound .ℕ (V x) p zero σ (suc k) () | nothing
+sound .ℕ (V x) p (suc n) σ zero ()
+sound .ℕ (V x) p (suc n) σ (suc k) eq with σ x
+sound .ℕ (V x) p (suc n) σ (suc k) refl | just .(suc n) = refl
+sound .ℕ (V x) p (suc n) σ (suc k) () | nothing 
 
--- addition
-sound .ℕ (e ⊕ e₁) p n σ k eq = {!!}
+--addition
+sound .ℕ (e ⊕ e') p n σ k eq = {!!}
 
--- if/else
+--subtraction
+sound .ℕ (e ⊝ e₁) p n σ k eq = {!!}
+
+--if/else
 sound .ℕ (if_then_else e e₁ e₂) p n σ k eq = {!!}
