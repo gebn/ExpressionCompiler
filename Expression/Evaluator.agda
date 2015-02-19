@@ -6,6 +6,16 @@ open import Data.Nat
 open import Expression.Blocks public
 open import Interpreter.Runtime public
 
+{- Applies an operation to two 'maybe' operands if and only if neither are 'nothing'. -}
+≻ : ∀ {a} {A : Set a} → Maybe A → Maybe A → (A → A → A) → Maybe A
+
+-- both operands are just a value - apply the operation and return the result
+≻ (just m) (just n) op = just (op m n)
+
+-- one or both of the operands are nothing - return nothing
+≻ _ _ _ = nothing
+
+
 {- Evaluates an expression and returns the result, or nothing if an error occured. -}
 ⟦_⟧ : ∀ {T} → Exp T → State → Maybe ℕ
 
@@ -15,27 +25,11 @@ open import Interpreter.Runtime public
 -- a variable name - look up its value in the state
 ⟦ V(s) ⟧ σ = σ s
 
--- recursively evaluate each side of the operator (N.B. states are identical)
-⟦ E ⊕ E' ⟧ σ = ⟦ E ⟧ σ +' ⟦ E' ⟧ σ where
+-- recursively evaluate each side of the operator and add the result it both produce a value (N.B. states are identical)
+⟦ E ⊕ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) _+_
 
-  _+'_ : Maybe ℕ → Maybe ℕ → Maybe ℕ
-
-  -- if both sides returned a value, the result is simply the sum of them
-  just m +' just n = just (m + n)
-
-  -- otherwise halt evaluation and return an error
-  _      +' _      = nothing
-
--- same as above the addition case only here using the subtraction 
-⟦ E ⊝ E' ⟧ σ = ⟦ E ⟧ σ -' ⟦ E' ⟧ σ where
- 
-  _-'_ : Maybe ℕ → Maybe ℕ → Maybe ℕ 
-
-  -- both sides have a value therefore we can use (m-n) to find their difference
-  just m -' just n = just (m ∸ n) 
-
-  -- otherwise half evaluation and return an error
-  _      -' _      = nothing
+-- same as the addition case above, only using subtraction
+⟦ E ⊝ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) _∸_
 
 -- evaluate the condition
 ⟦ if E then E′ else E″ ⟧ σ with ⟦ E ⟧ σ
