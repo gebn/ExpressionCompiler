@@ -40,11 +40,11 @@ sound .ℕ (V x) p (suc n) σ (suc k) eq with σ x
 sound .ℕ (V x) p (suc n) σ (suc k) refl | just .(suc n) = refl -- just (suc n) ≡ just (suc n) is trivially correct
 sound .ℕ (V x) p (suc n) σ (suc k) () | nothing                -- nothing ≡ just (suc n ∷ []) is false
 
---addition
+-- addition
 sound .ℕ (e ⊕ e') p n σ k eq = {!!}
 
---subtraction
+-- subtraction
 sound .ℕ (e ⊝ e₁) p n σ k eq = {!!}
 
---if/else
+-- if/else
 sound .ℕ (if_then_else e e₁ e₂) p n σ k eq = {!!}
