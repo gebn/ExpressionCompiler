@@ -88,7 +88,14 @@ sound .ℕ (V x) p n σ (suc k) refl | just .n = refl -- just (suc n) ≡ just (
 sound .ℕ (V x) p n σ (suc k) () | nothing          -- nothing ≡ just (suc n ∷ []) is false
 
 -- addition
-sound .ℕ (e ⊕ e') p n σ k eq = {!!}
+sound .ℕ (e ⊕ e') p n σ k eq with ⟦ e ⊕ e' ⟧ σ | ⟨⟨ compile (e ⊕ e') ⟩⟩ [] , σ , k
+sound .ℕ (e ⊕ e') p n σ k () | just zero | just []
+sound .ℕ (e ⊕ e') p x σ k refl | just zero | just (.x ∷ .[]) = {!!}
+sound .ℕ (e ⊕ e') p n σ k () | just (suc x) | just []
+sound .ℕ (e ⊕ e') p n σ k eq | just (suc x) | just (x₁ ∷ x₂) = {!!}
+sound .ℕ (e ⊕ e') p n σ k () | just x | nothing
+sound .ℕ (e ⊕ e') p n σ k eq | nothing | just x₁ = {!!}
+sound .ℕ (e ⊕ e') p n σ k () | nothing | nothing
 
 -- subtraction
 sound .ℕ (e ⊝ e₁) p n σ k eq = {!!}
