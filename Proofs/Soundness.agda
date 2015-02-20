@@ -47,4 +47,5 @@ sound .ℕ (e ⊕ e') p n σ k eq = {!!}
 sound .ℕ (e ⊝ e₁) p n σ k eq = {!!}
 
 -- if/else
-sound .ℕ (if_then_else e e₁ e₂) p n σ k eq = {!!}
+sound .ℕ (if_then_else e e₁ e₂) p n σ zero ()    -- just [] ≡ just (n ∷ []) is false
+sound .ℕ (if_then_else e e₁ e₂) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
