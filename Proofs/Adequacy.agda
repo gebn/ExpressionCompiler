@@ -22,7 +22,7 @@ adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
 
 -- booleans
-adeq .𝔹 (B _) _ _ _ () -- nothing ≡ just n is false
+adeq .𝔹 (B x) p σ n () -- nothing ≡ just n is false
 
 -- naturals
 adeq .ℕ (N .zero) p σ zero refl = suc zero , refl    -- just zero is trivially equal to just (zero ∷ [])
@@ -46,8 +46,8 @@ exists a number of execution steps after which the result will also be nothing.
 -}
 adeq-fail : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ nothing → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ nothing)
-adeq-fail .𝔹 (B _) _ _ n refl = suc n , refl -- nothing ≡ nothing is trivially correct
-adeq-fail .ℕ (N _) _ _ _ ()                  -- just x ≡ nothing is false
+adeq-fail .𝔹 (B x) p σ n refl = suc n , refl -- nothing ≡ nothing is trivially correct
+adeq-fail .ℕ (N x) p σ n ()                  -- just x ≡ nothing is false
 adeq-fail .ℕ (V x) p σ n eq = {!!}
 adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
 adeq-fail .ℕ (e ⊝ e₁) p σ n eq = {!!}
