@@ -46,9 +46,21 @@ exists a number of execution steps after which the result will also be nothing.
 -}
 adeq-fail : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ nothing → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ nothing)
+
+-- booleans
 adeq-fail .𝔹 (B x) p σ n refl = suc n , refl -- nothing ≡ nothing is trivially correct
-adeq-fail .ℕ (N x) p σ n ()                  -- just x ≡ nothing is false
+
+-- naturals
+adeq-fail .ℕ (N x) p σ n () -- just x ≡ nothing is false
+
+-- variables
 adeq-fail .ℕ (V x) p σ n eq = {!!}
+
+-- addition
 adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
+
+-- subtraction
 adeq-fail .ℕ (e ⊝ e₁) p σ n eq = {!!}
+
+-- if/else
 adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
