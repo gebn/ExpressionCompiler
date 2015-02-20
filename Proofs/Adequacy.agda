@@ -20,11 +20,23 @@ steps, will produce the result n.
 -}
 adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
+
+-- booleans
 adeq .𝔹 (B _) _ _ _ () -- nothing ≡ just n is false
+
+-- naturals
 adeq .ℕ (N x) p σ n eq = {!!}
+
+-- variables
 adeq .ℕ (V x) p σ n eq = {!!}
+
+-- addition
 adeq .ℕ (e ⊕ e₁) p σ n eq = {!!}
+
+-- subtraction
 adeq .ℕ (e ⊝ e₁) p σ n eq = {!!}
+
+-- if/else
 adeq .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
 {-
