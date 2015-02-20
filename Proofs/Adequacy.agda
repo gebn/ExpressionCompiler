@@ -24,6 +24,7 @@ adeq .𝔹 (B _) _ _ _ () -- nothing ≡ just n is false
 adeq .ℕ (N x) p σ n eq = {!!}
 adeq .ℕ (V x) p σ n eq = {!!}
 adeq .ℕ (e ⊕ e₁) p σ n eq = {!!}
+adeq .ℕ (e ⊝ e₁) p σ n eq = {!!}
 adeq .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
 {-
@@ -36,4 +37,5 @@ adeq-fail .𝔹 (B _) _ _ n refl = suc n , refl -- nothing ≡ nothing is trivia
 adeq-fail .ℕ (N _) _ _ _ ()                  -- just x ≡ nothing is false
 adeq-fail .ℕ (V x) p σ n eq = {!!}
 adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
+adeq-fail .ℕ (e ⊝ e₁) p σ n eq = {!!}
 adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
