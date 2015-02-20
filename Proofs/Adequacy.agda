@@ -25,7 +25,8 @@ adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
 adeq .𝔹 (B _) _ _ _ () -- nothing ≡ just n is false
 
 -- naturals
-adeq .ℕ (N x) p σ n eq = {!!}
+adeq .ℕ (N .zero) p σ zero refl = suc zero , refl    -- just zero is trivially equal to just (zero ∷ [])
+adeq .ℕ (N .(suc n)) p σ (suc n) refl = suc n , refl -- just (suc n) is trivially equal to just (suc n ∷ [])
 
 -- variables
 adeq .ℕ (V x) p σ n eq = {!!}
