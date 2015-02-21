@@ -26,8 +26,7 @@ sound .𝔹 (B x) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
 
 -- naturals
 sound .ℕ (N x) p n σ zero ()              -- just [] ≡ just n is false                                                      --
-sound .ℕ (N zero) p (suc n) σ (suc k) ()  -- just (0 ∷ []) ≡ just (suc n ∷ []) is false
-sound .ℕ (N x) p .x σ (suc k) refl = refl -- just (suc x) ≡ just (suc x) is trivially correct
+sound .ℕ (N .n) p n σ (suc k) refl = refl -- just n ≡ just n is trivially correct
 
 -- variables
 sound .ℕ (V x) p n σ zero ()                       -- just [] ≡ just (suc n ∷ []) is false
