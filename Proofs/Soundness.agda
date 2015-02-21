@@ -25,15 +25,15 @@ sound .𝔹 (B x) p n σ zero ()    -- just [] ≡ just (n ∷ []) is false
 sound .𝔹 (B x) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
 
 -- naturals
-sound .ℕ (N x) p n σ zero ()                          -- just [] ≡ just n is false                                                      --
-sound .ℕ (N zero) p (suc n) σ (suc k) ()              -- just (0 ∷ []) ≡ just (suc n ∷ []) is false
+sound .ℕ (N x) p n σ zero ()              -- just [] ≡ just n is false                                                      --
+sound .ℕ (N zero) p (suc n) σ (suc k) ()  -- just (0 ∷ []) ≡ just (suc n ∷ []) is false
 sound .ℕ (N x) p .x σ (suc k) refl = refl -- just (suc x) ≡ just (suc x) is trivially correct
 
 -- variables
-sound .ℕ (V x) p n σ zero ()                             -- just [] ≡ just (suc n ∷ []) is false
+sound .ℕ (V x) p n σ zero ()                       -- just [] ≡ just (suc n ∷ []) is false
 sound .ℕ (V x) p n σ (suc k) eq with σ x
 sound .ℕ (V x) p n σ (suc k) refl | just .n = refl -- just (suc n) ≡ just (suc n) is trivially correct
-sound .ℕ (V x) p n σ (suc k) () | nothing                -- nothing ≡ just (suc n ∷ []) is false
+sound .ℕ (V x) p n σ (suc k) () | nothing          -- nothing ≡ just (suc n ∷ []) is false
 
 -- addition
 sound .ℕ (e ⊕ e') p n σ k eq = {!!}
