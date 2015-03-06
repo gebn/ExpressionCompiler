@@ -5,6 +5,7 @@ open import Data.List
 open import Data.Maybe
 open import Data.Nat
 open import Data.Product
+open import Data.String
 open import Relation.Binary.PropositionalEquality hiding ([_])
 
 open import Expression.Compiler
@@ -39,6 +40,10 @@ adeq .ℕ (e ⊝ e₁) p σ n eq = {!!}
 -- if/else
 adeq .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
+
+V-lemma : (σ : State) (x : String ) → 
+      σ x ≡ nothing → (⟨⟨ Var x ∷ [] ⟩⟩ [] , σ , suc 0) ≡ nothing
+V-lemma σ x p rewrite p = refl
 {-
 Identical to adeq above, except that if the result of evaluation is nothing, there
 exists a number of execution steps after which the result will also be nothing.
@@ -53,7 +58,7 @@ adeq-fail .𝔹 (B x) p σ n refl = suc n , refl -- nothing ≡ nothing is trivi
 adeq-fail .ℕ (N x) p σ n () -- just x ≡ nothing is false
 
 -- variables
-adeq-fail .ℕ (V x) p σ n eq = {!!}
+adeq-fail .ℕ (V x) p σ n eq = suc 0 , V-lemma σ x eq
 
 -- addition
 adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
