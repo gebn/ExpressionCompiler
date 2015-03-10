@@ -1,16 +1,16 @@
-# ExpressionCompiler
+# Expression Compiler
 
-A compiler from arithmetic expressions to a stack machine, written in Agda.
+A compiler from arithmetic expressions to a stack machine, written in Agda. This project was completed as part of the *Advanced Functional Programming* module at the University of Birmingham.
 
 ## Structure
 
-We refactored the initial code into 3 modules:
+We refactored the initial code into three modules:
 
  - *Expression*
    Building blocks for creating (`Exp`) and evaluating (`⟦_⟧`) expressions, as well as code to turn them into executable programs (`compile`).
-   - The `Expr` type can be found in `Blocks.agda`.
-   - Our `compile` function is in `Compiler.agda`.
-   - Code to evaluate `Expr`essions `⟦_⟧` is located in `Evaluator.agda`.
+    - The `Expr` type can be found in `Blocks.agda`.
+    - Our `compile` function is in `Compiler.agda`.
+    - Code to evaluate `Expr`essions `⟦_⟧` is located in `Evaluator.agda`.
 
  - *Interpreter*
    Contains instructions (`Instr`) and infrastructure to execute programs (`⟨⟨_⟩⟩_,_,_`).
