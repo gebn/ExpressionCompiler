@@ -79,16 +79,16 @@ adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = suc 0 , refl
 
 --Refined version of adequacy proof
 adeq' : (T : Set) (s : Stack) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
-        ⟦ e ⟧ σ ≡ just n → (∃ λ k → ∃ λ k' → ⟨⟨ compile e ++ p ⟩⟩ [] , σ , k ≡ ⟨⟨ p ⟩⟩ (n ∷ s), σ , k')
+        ⟦ e ⟧ σ ≡ just n → (∃ λ k → ∃ λ k' → ⟨⟨ compile e ++ p ⟩⟩ s , σ , k ≡ ⟨⟨ p ⟩⟩ (n ∷ s), σ , k')
 
 -- booleans
 adeq' .𝔹 s (B x) p σ n ()       --nothing ≡ just n is false
 
 -- naturals
-adeq' .ℕ s (N x) p σ n eq = {!!} 
+adeq' .ℕ s (N x) p σ n eq = {!!}
 
 -- variables
-adeq' .ℕ s (V x) p σ n eq = {!!}
+adeq' .ℕ s (V x) p σ n eq = suc 0 , suc 0 , cong (λ v → aux p s σ (suc 0) v) eq
 
 -- addition
 adeq' .ℕ s (e ⊕ e₁) p σ n eq = {!!}
