@@ -85,7 +85,7 @@ adeq' : (T : Set) (s : Stack) (e : Exp T) (p : Program) (σ : State) (n : ℕ) �
 adeq' .𝔹 s (B x) p σ n ()       --nothing ≡ just n is false
 
 -- naturals
-adeq' .ℕ s (N x) p σ n eq = {!!}
+adeq' .ℕ s (N x) p σ .x refl = suc x , x , refl -- just x ≡ just x 
 
 -- variables
 adeq' .ℕ s (V x) p σ n eq = suc 0 , suc 0 , cong (λ v → aux p s σ (suc 0) v) eq
