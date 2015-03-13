@@ -10,4 +10,4 @@ data Instr : Set where
   Add : Instr
   Sub : Instr
   Joz : ℕ → Instr      -- jump on zero
-  Err : Instr
+  --Removed Err at advice of Neel 
