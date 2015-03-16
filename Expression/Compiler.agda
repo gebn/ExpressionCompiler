@@ -21,6 +21,7 @@ compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
 -- same as the arguments for the addition
 compile (E ⊝ E') = (compile E ++ compile E') ++ [ Sub ]
 
+-- compiling booleans to either 1 or 0 to allow them to be used in an 'if then else' 
 compile (B true) = [ Val (suc zero) ]
 compile (B false) = [ Val zero ] 
 
