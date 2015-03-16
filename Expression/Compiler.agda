@@ -29,7 +29,7 @@ compile (E ⊝ E')  = (compile E ++ compile E') ++ [ Sub ]
 -- if-then-else is a bit more complex, and required the addition of a `Jmp` instruction
 compile (if E then E' else E'') =
     e                          -- compute the condition
-    ++ [ Joz (length e' + 1) ] -- if the condition is false (i.e. 0), jump to the else
+    ++ [ Joz (length e' + 1) ] -- if the condition is false, jump to the else
                                -- (the + 1 is to include our Jmp instruction at the end of the if branch)
     ++ e'                      -- execute the if branch
     ++ [ Jmp (length e'') ]    -- jump over the else branch
