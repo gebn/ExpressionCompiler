@@ -3,6 +3,7 @@ module Interpreter.Executor where
 open import Data.List
 open import Data.Maybe
 open import Data.Nat
+
 open import Interpreter.Runtime public
 
 {- Executes a Program, returning the final State of its Stack, or nothing if an error occurred. -}
@@ -27,6 +28,9 @@ aux : Program → Stack → State → ℕ → Maybe ℕ → Maybe Stack
 
 -- subtraction reduces the head of the Stack by the second element, and pushes back the result
 ⟨⟨ Sub ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (m ∸ n ∷ s) , σ , k
+
+-- jump skips the next n instructions
+⟨⟨ Jmp n ∷ p ⟩⟩ s , σ , suc k = ⟨⟨ drop n p ⟩⟩ s , σ , k
 
 -- jump on zero and the head of the Stack is zero, so skip forward n instructions
 ⟨⟨ Joz n ∷ p ⟩⟩ (zero ∷ s) , σ , suc k = ⟨⟨ drop n p ⟩⟩ s , σ , k

@@ -9,5 +9,6 @@ data Instr : Set where
   Val : ℕ → Instr      -- a literal value
   Add : Instr
   Sub : Instr
+  Jmp : ℕ → Instr      -- jump
   Joz : ℕ → Instr      -- jump on zero
   Err : Instr
