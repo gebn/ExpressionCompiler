@@ -12,8 +12,6 @@ open import Interpreter.Runtime public
 {- Executes a Program, returning the final State of its Stack, or nothing if an error occurred. -}
 ⟨⟨_⟩⟩_,_,_ : Program → Stack → State → ℕ → Maybe Stack
 
-aux : Program → Stack → State → ℕ → Maybe ℕ → Maybe Stack
-
 -- if there are no (more) instructions to execute, return the Stack
 ⟨⟨ [] ⟩⟩ s , _ , _ = just s
 
@@ -23,8 +21,10 @@ aux : Program → Stack → State → ℕ → Maybe ℕ → Maybe Stack
 -- if we're given a constant, just push it onto the Stack and decrement the counter
 ⟨⟨ Val x ∷ p ⟩⟩ s , σ , suc k = ⟨⟨ p ⟩⟩ (x ∷ s) , σ , k
 
--- if we're provided with a variable, retrieve its value from the State using aux
-⟨⟨ Var x ∷ p ⟩⟩ s , σ , suc k = aux p s σ (suc k) (σ x)
+-- if we're provided with a variable, retrieve its value from the State
+⟨⟨ Var x ∷ p ⟩⟩ s , σ , suc k with σ x
+... | just v = ⟨⟨ p ⟩⟩ (v ∷ s) , σ , k -- lookup succeeded - push value to the Stack and continue
+... | nothing = nothing                -- lookup failed - persist error
 
 -- not inverts the head of the stack
 ⟨⟨ Not ∷ p ⟩⟩ (n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (ubop not n) ∷ s , σ , k
@@ -52,7 +52,3 @@ aux : Program → Stack → State → ℕ → Maybe ℕ → Maybe Stack
 
 -- any other scenario is an error (e.g. an empty Stack when asked to do addition)
 ⟨⟨ _ ⟩⟩ _ , _ , _ = nothing
-
--- given a Maybe ℕ add it to the Stack or nothing
-aux p s σ k (just v) = ⟨⟨ p ⟩⟩ (v ∷ s) , σ , k
-aux p s σ k nothing = nothing

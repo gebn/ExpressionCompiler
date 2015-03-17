@@ -33,7 +33,8 @@ adeq .𝔹 (x ∥ y) p σ n eq = {!!}
 adeq .ℕ (N .n) p σ n refl = suc zero , refl          -- just (n :: []) is trivially equal to just [ n ]
 
 -- variables
-adeq .ℕ (V x) p σ n eq = suc 0 , cong (λ v → aux [] [] σ (suc 0) v) eq 
+adeq .ℕ (V x) p σ zero eq = {!!}
+adeq .ℕ (V x) p σ (suc n) eq = {!!}
 
 -- addition
 adeq .ℕ (e ⊕ e₁) p σ n eq = {!!}
@@ -72,7 +73,7 @@ adeq-fail .𝔹 (x ∥ y) p σ n eq = {!!}
 adeq-fail .ℕ (N x) p σ n () -- just x ≡ nothing is false
 
 -- variables
-adeq-fail .ℕ (V x) p σ n eq = suc 0 , cong (λ v → aux [] [] σ (suc 0) v) eq
+adeq-fail .ℕ (V x) p σ n eq = {!!}
 
 -- addition
 adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
@@ -98,7 +99,7 @@ adeq' .𝔹 s (x ∥ y)  p σ n eq = {!!}
 adeq' .ℕ s (N x) p σ .x refl = suc x , x , refl -- just x ≡ just x 
 
 -- variables
-adeq' .ℕ s (V x) p σ n eq = suc 0 , suc 0 , cong (λ v → aux p s σ (suc 0) v) eq
+adeq' .ℕ s (V x) p σ n eq = {!!}
 
 -- addition
 adeq' .ℕ s (e ⊕ e₁) p σ n eq = {!!}
