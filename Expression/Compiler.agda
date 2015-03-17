@@ -4,6 +4,7 @@ open import Data.List
 open import Data.Nat
 open import Data.Bool
 
+open import Util.Convert
 open import Expression.Blocks
 open import Interpreter.Runtime
 
@@ -12,14 +13,13 @@ compile : ∀ {T} → Exp T → Program
 
 
 -- boolean true and false are equivalent to the naturals 1 and 0 respectively
-compile (B true)  = [ Val (suc zero) ]
-compile (B false) = [ Val zero ]
+compile (B b) = [ Val (𝔹→ℕ b) ]
 
 -- raw values map to a single instruction
-compile (N n)     = [ Val n ]
+compile (N n) = [ Val n ]
 
 -- as do variable names
-compile (V s)     = [ Var s ]
+compile (V s) = [ Var s ]
 
 
 -- compute the result of the expression, then invert it
@@ -33,10 +33,10 @@ compile (E ∥ E') = compile E ++ compile E' ++ [ Or ]
 
 
 -- the operand goes after the arguments as the instruction list is executed in-order
-compile (E ⊕ E')  = (compile E ++ compile E') ++ [ Add ]
+compile (E ⊕ E') = (compile E ++ compile E') ++ [ Add ]
 
 -- same as the arguments for the addition
-compile (E ⊝ E')  = (compile E ++ compile E') ++ [ Sub ]
+compile (E ⊝ E') = (compile E ++ compile E') ++ [ Sub ]
 
 
 -- if-then-else is a bit more complex, and required the addition of a `Jmp` instruction
