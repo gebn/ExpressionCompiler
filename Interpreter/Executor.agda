@@ -5,8 +5,8 @@ open import Data.List
 open import Data.Maybe
 open import Data.Nat
 
-open import Util.Convert
-open import Util.NatBool
+open import Utilities.Convert
+open import Utilities.NatBool
 open import Interpreter.Runtime public
 
 {- Executes a Program, returning the final State of its Stack, or nothing if an error occurred. -}

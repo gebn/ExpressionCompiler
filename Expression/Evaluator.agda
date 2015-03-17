@@ -4,8 +4,8 @@ open import Data.Bool
 open import Data.Nat
 open import Data.Maybe
 
-open import Util.Convert
-open import Util.NatBool
+open import Utilities.Convert
+open import Utilities.NatBool
 open import Expression.Blocks public
 open import Interpreter.Runtime public
 

@@ -1,4 +1,4 @@
-module Util.Convert where
+module Utilities.Convert where
 
 open import Data.Bool renaming (Bool to 𝔹)
 open import Data.Nat

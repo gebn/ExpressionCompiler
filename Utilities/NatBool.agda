@@ -1,9 +1,9 @@
-module Util.NatBool where
+module Utilities.NatBool where
 
 open import Data.Bool renaming (Bool to 𝔹)
 open import Data.Nat
 
-open import Util.Convert
+open import Utilities.Convert
 
 {- Apply a unary boolean operator to a natural. -}
 ubop : (𝔹 → 𝔹) → ℕ → ℕ
