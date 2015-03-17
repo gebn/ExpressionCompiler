@@ -1,4 +1,4 @@
-module Utilities.NatBool where
+module Utilities.NaturalBooleanLogic where
 
 open import Data.Bool renaming (Bool to 𝔹)
 open import Data.Nat

@@ -6,7 +6,7 @@ open import Data.Maybe
 open import Data.Nat
 
 open import Utilities.Convert
-open import Utilities.NatBool
+open import Utilities.NaturalBooleanLogic
 open import Interpreter.Runtime public
 
 {- Executes a Program, returning the final State of its Stack, or nothing if an error occurred. -}

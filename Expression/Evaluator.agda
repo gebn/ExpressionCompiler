@@ -5,7 +5,7 @@ open import Data.Nat
 open import Data.Maybe
 
 open import Utilities.Convert
-open import Utilities.NatBool
+open import Utilities.NaturalBooleanLogic
 open import Expression.Blocks public
 open import Interpreter.Runtime public
 
