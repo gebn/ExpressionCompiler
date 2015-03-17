@@ -24,7 +24,10 @@ adeq : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ just [ n ])
 
 -- booleans
-adeq .𝔹 (B x) p σ n () -- nothing ≡ just n is false
+adeq .𝔹 (B x) p σ n eq = {!!} 
+adeq .𝔹 (¬ x) p σ n eq = {!!} 
+adeq .𝔹 (x & y) p σ n eq = {!!} 
+adeq .𝔹 (x ∥ y) p σ n eq = {!!} 
 
 -- naturals
 adeq .ℕ (N .n) p σ n refl = suc zero , refl          -- just (n :: []) is trivially equal to just [ n ]
@@ -59,7 +62,11 @@ adeq-fail : (T : Set) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
         ⟦ e ⟧ σ ≡ nothing → (∃ λ k → ⟨⟨ compile e ⟩⟩ [] , σ , k ≡ nothing)
 
 -- booleans
-adeq-fail .𝔹 (B x) p σ n refl = suc 0 , refl -- nothing ≡ nothing is trivially correct
+adeq-fail .𝔹 (B x) p σ n eq = {!!}
+adeq-fail .𝔹 (¬ x) p σ n eq = {!!}
+adeq-fail .𝔹 (x & y) p σ n eq = {!!}
+adeq-fail .𝔹 (x ∥ y) p σ n eq = {!!}
+
 
 -- naturals
 adeq-fail .ℕ (N x) p σ n () -- just x ≡ nothing is false
@@ -74,7 +81,7 @@ adeq-fail .ℕ (e ⊕ e₁) p σ n eq = {!!}
 adeq-fail .ℕ (e ⊝ e₁) p σ n eq = {!!}
 
 -- if/else
-adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = suc 0 , refl 
+adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
 
 --Refined version of adequacy proof
@@ -82,7 +89,10 @@ adeq' : (T : Set) (s : Stack) (e : Exp T) (p : Program) (σ : State) (n : ℕ) �
         ⟦ e ⟧ σ ≡ just n → (∃ λ k → ∃ λ k' → ⟨⟨ compile e ++ p ⟩⟩ s , σ , k ≡ ⟨⟨ p ⟩⟩ (n ∷ s), σ , k')
 
 -- booleans
-adeq' .𝔹 s (B x) p σ n ()       --nothing ≡ just n is false
+adeq' .𝔹 s (B x) p σ n eq = {!!} 
+adeq' .𝔹 s (¬ x) p σ n eq = {!!}
+adeq' .𝔹 s (x & y) p σ n eq = {!!}
+adeq' .𝔹 s (x ∥ y)  p σ n eq = {!!}
 
 -- naturals
 adeq' .ℕ s (N x) p σ .x refl = suc x , x , refl -- just x ≡ just x 
