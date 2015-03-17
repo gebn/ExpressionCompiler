@@ -25,6 +25,12 @@ sound' : (T : Set)(s : Stack) (e : Exp T) (p : Program) (n : ℕ) (σ : State) (
 -- booleans
 sound' .𝔹 s (B x) p n σ k k' eq = {!!}
 
+sound' .𝔹 s (¬ x) p n σ k k' eq = ?
+
+sound' .𝔹 s (x & y) p n σ k k' eq = ?
+
+sound' .𝔹 s (x ∥ y) p n σ k k' eq = ?
+
 -- naturals
 sound' .ℕ s (N x) p n σ k k' eq = {!!}
 
