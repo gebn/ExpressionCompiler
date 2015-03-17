@@ -9,7 +9,7 @@ open import Expression.Blocks public
 open import Interpreter.Runtime public
 
 {- Applies an operation to two 'maybe' operands if and only if neither are 'nothing'. -}
-≻ : ∀ {a} {A : Set a} → Maybe A → Maybe A → (A → A → A) → Maybe A
+private ≻ : ∀ {a} {A : Set a} → Maybe A → Maybe A → (A → A → A) → Maybe A
 
 -- both operands are just a value - apply the operation and return the result
 ≻ (just m) (just n) op = just (op m n)
