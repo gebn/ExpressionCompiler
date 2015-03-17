@@ -1,8 +1,10 @@
 module Expression.Evaluator where
 
-open import Data.Maybe
+open import Data.Bool
 open import Data.Nat
+open import Data.Maybe
 
+open import Util.Convert
 open import Expression.Blocks public
 open import Interpreter.Runtime public
 
@@ -25,11 +27,25 @@ open import Interpreter.Runtime public
 -- a variable name - look up its value in the state
 ⟦ V(s) ⟧ σ = σ s
 
+
+-- not requires some fiddling from and to naturals
+⟦ ¬ E ⟧ σ with ⟦ E ⟧ σ
+... | nothing = nothing
+... | just n  = just (𝔹→ℕ (not (ℕ→𝔹 n)))
+
+-- as does AND
+⟦ E & E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (λ m n → (𝔹→ℕ ((ℕ→𝔹 m) ∧ (ℕ→𝔹 n))))
+
+-- and OR
+⟦ E ∥ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (λ m n → (𝔹→ℕ ((ℕ→𝔹 m) ∨ (ℕ→𝔹 n))))
+
+
 -- recursively evaluate each side of the operator and add the result it both produce a value (N.B. states are identical)
 ⟦ E ⊕ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) _+_
 
 -- same as the addition case above, only using subtraction
 ⟦ E ⊝ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) _∸_
+
 
 -- evaluate the condition
 ⟦ if E then E′ else E″ ⟧ σ with ⟦ E ⟧ σ
