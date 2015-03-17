@@ -5,6 +5,7 @@ open import Data.Nat
 open import Data.Maybe
 
 open import Util.Convert
+open import Util.NatBool
 open import Expression.Blocks public
 open import Interpreter.Runtime public
 
@@ -34,13 +35,13 @@ private ≻ : ∀ {a} {A : Set a} → Maybe A → Maybe A → (A → A → A) �
 -- not requires some fiddling from and to naturals
 ⟦ ¬ E ⟧ σ with ⟦ E ⟧ σ
 ... | nothing = nothing
-... | just n  = just (𝔹→ℕ (not (ℕ→𝔹 n)))
+... | just n  = just (ubop not n)
 
 -- as does AND
-⟦ E & E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (λ m n → (𝔹→ℕ ((ℕ→𝔹 m) ∧ (ℕ→𝔹 n))))
+⟦ E & E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (bbop _∧_)
 
 -- and OR
-⟦ E ∥ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (λ m n → (𝔹→ℕ ((ℕ→𝔹 m) ∨ (ℕ→𝔹 n))))
+⟦ E ∥ E' ⟧ σ = ≻ (⟦ E ⟧ σ) (⟦ E' ⟧ σ) (bbop _∨_)
 
 
 -- recursively evaluate each side of the operator and add the result it both produce a value (N.B. states are identical)

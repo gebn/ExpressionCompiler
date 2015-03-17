@@ -6,6 +6,7 @@ open import Data.Maybe
 open import Data.Nat
 
 open import Util.Convert
+open import Util.NatBool
 open import Interpreter.Runtime public
 
 {- Executes a Program, returning the final State of its Stack, or nothing if an error occurred. -}
@@ -26,13 +27,13 @@ aux : Program → Stack → State → ℕ → Maybe ℕ → Maybe Stack
 ⟨⟨ Var x ∷ p ⟩⟩ s , σ , suc k = aux p s σ (suc k) (σ x)
 
 -- not inverts the head of the stack
-⟨⟨ Not ∷ p ⟩⟩ (n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (𝔹→ℕ (not (ℕ→𝔹 n)) ∷ s) , σ , k
+⟨⟨ Not ∷ p ⟩⟩ (n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (ubop not n) ∷ s , σ , k
 
 -- and tests whether the first two elements of the stack are true-y
-⟨⟨ And ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (𝔹→ℕ ((ℕ→𝔹 m) ∧ (ℕ→𝔹 n)) ∷ s) , σ , k
+⟨⟨ And ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (bbop _∧_ m n) ∷ s , σ , k
 
 -- or tests whether either of the first two elements of the stack are true-y
-⟨⟨ Or  ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (𝔹→ℕ ((ℕ→𝔹 m) ∨ (ℕ→𝔹 n)) ∷ s) , σ , k 
+⟨⟨ Or  ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (bbop _∨_ m n) ∷ s , σ , k
 
 -- addition sums the first two elements in the Stack, and pushes the result back onto the Stack
 ⟨⟨ Add ∷ p ⟩⟩ (m ∷ n ∷ s) , σ , suc k = ⟨⟨ p ⟩⟩ (m + n ∷ s) , σ , k
