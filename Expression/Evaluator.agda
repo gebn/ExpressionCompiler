@@ -21,6 +21,9 @@ open import Interpreter.Runtime public
 {- Evaluates an expression and returns the result, or nothing if an error occured. -}
 ⟦_⟧ : ∀ {T} → Exp T → State → Maybe ℕ
 
+-- booleans are simply converted into their natural equivalent
+⟦ B(b) ⟧ _ = just (𝔹→ℕ b)
+
 -- a literal value trivially evaluates to itself
 ⟦ N(v) ⟧ _ = just v
 
@@ -58,6 +61,3 @@ open import Interpreter.Runtime public
 
       -- evaluation of the condition failed - fail ourselves
 ...   | nothing   = nothing
-
--- any other scenario is an error (e.g. a boolean expression on its own)
-⟦ _ ⟧ _ = nothing
