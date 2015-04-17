@@ -4,7 +4,7 @@ A compiler from arithmetic expressions to a stack machine, written in Agda. This
 
 ## Structure
 
-We refactored the initial code into three modules:
+We refactored the initial code into several modules for clarity. Our project is divided into four namespaces:
 
  - *Expression*  
    Building blocks for creating (`Exp`) and evaluating (`⟦_⟧`) expressions, as well as code to turn them into executable programs (`compile`).
@@ -22,3 +22,8 @@ We refactored the initial code into three modules:
    Various proofs for the correctness of our compiler.
     - `sound` can be found in `Soundness.agda`.
     - `adeq` and `adeq-fail` proofs are in `Adequacy.agda`.
+
+ - *Utilities*  
+   Additional, general functions useful throughout the project.
+    - Functions converting between booleans and naturals are housed in `Convert.agda`.
+    - `NaturalBooleanLogic.agda` allows unary and binary boolean logic to be applied to natural arguments.
