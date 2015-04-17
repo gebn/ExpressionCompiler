@@ -2,6 +2,14 @@
 
 A compiler from arithmetic expressions to a stack machine, written in Agda. This project was completed as part of the *Advanced Functional Programming* module at the University of Birmingham.
 
+## Team
+
+ - **George Brighton** ([@gebn](https://github.com/gebn)) ([contributions](https://github.com/gebn/ExpressionCompiler/commits?author=gebn))
+ - Renu Budiyanto ([@RenuAB](https://github.com/RenuAB)) ([contributions](https://github.com/gebn/ExpressionCompiler/commits?author=RenuAB))
+ - Sam Jones ([@Sam066](https://github.com/Sam066)) ([contributions](https://github.com/gebn/ExpressionCompiler/commits?author=Sam066))
+ - Michael Thomas ([@mikeyt103](https://github.com/mikeyt103)) ([contributions](https://github.com/gebn/ExpressionCompiler/commits?author=mikeyt103))
+ - Grace Wong ([@gcywong](https://github.com/gcywong)) ([contributions](https://github.com/gebn/ExpressionCompiler/commits?author=gcywong))
+
 ## Structure
 
 We refactored the initial code into several modules for clarity. Our project is divided into four namespaces:
