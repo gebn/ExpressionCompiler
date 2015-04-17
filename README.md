@@ -35,3 +35,13 @@ We refactored the initial code into several modules for clarity. Our project is 
    Additional, general functions useful throughout the project.
     - Functions converting between booleans and naturals are housed in `Convert.agda`.
     - `NaturalBooleanLogic.agda` allows unary and binary boolean logic to be applied to natural arguments.
+
+## Management
+
+We made the decision at an early stage to focus on proofs rather than extending functionality, in order to fit in with the spirit of the module - after all, Agda is a proof assistant.
+
+Given how each part of the project is fairly self contained, very little inter-person management was necessary; it was simply a case of assigning work. This was done by breaking down a given proof into pattern matches, each case becoming a work unit. GitHub's [Issues](https://github.com/gebn/ExpressionCompiler/issues) feature was used to track allocation of work to team members so everyone knew who was working on what. Although not necessary, each unit of work was completed in its own branch, before being rebased onto `master`.
+
+I was very laid back with how cases were completed, allowing team members to work together, and switch when they became stuck, in an effort to avoid getting bogged down. We also set up a [Facebook group](https://www.facebook.com/groups/917497978290063/) (secret) and held a one-hour team meeting every Monday for members to update others, ask questions and raise issues. This all worked well until *all* the cases became difficult, at which time we moved towards adding new operators (`¬`, `&`, `∥`).
+
+Overall, I think the team felt the project was rather impenetrable beyond a certain stage. Initial cases were trivial, but making progress with latter ones, despite several meetings, proved to be extremely difficult.
