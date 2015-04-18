@@ -45,6 +45,33 @@ adeq .ℕ (e ⊝ e₁) p σ n eq = {!!}
 -- if/else
 adeq .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
 
+
+--Refined version of adequacy proof
+adeq' : (T : Set) (s : Stack) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
+        ⟦ e ⟧ σ ≡ just n → (∃ λ k → ∃ λ k' → ⟨⟨ compile e ++ p ⟩⟩ s , σ , k ≡ ⟨⟨ p ⟩⟩ (n ∷ s), σ , k')
+
+-- booleans
+adeq' .𝔹 s (B x) p σ n eq = {!!} 
+adeq' .𝔹 s (¬ x) p σ n eq = {!!}
+adeq' .𝔹 s (x & y) p σ n eq = {!!}
+adeq' .𝔹 s (x ∥ y)  p σ n eq = {!!}
+
+-- naturals
+adeq' .ℕ s (N x) p σ .x refl = suc x , x , refl -- just x ≡ just x 
+
+-- variables
+adeq' .ℕ s (V x) p σ n eq = {!!}
+
+-- addition
+adeq' .ℕ s (e ⊕ e₁) p σ n eq = {!!}
+
+-- subtraction
+adeq' .ℕ s (e ⊝ e₁) p σ n eq = {!!}
+
+-- if/else
+adeq' .ℕ s (if_then_else e e₁ e₂) p σ n eq = {!!}
+
+
 {-
 The following lemma is used to prove adeq-fail for variables.
 
@@ -83,29 +110,3 @@ adeq-fail .ℕ (e ⊝ e₁) p σ n eq = {!!}
 
 -- if/else
 adeq-fail .ℕ (if_then_else e e₁ e₂) p σ n eq = {!!}
-
-
---Refined version of adequacy proof
-adeq' : (T : Set) (s : Stack) (e : Exp T) (p : Program) (σ : State) (n : ℕ) →
-        ⟦ e ⟧ σ ≡ just n → (∃ λ k → ∃ λ k' → ⟨⟨ compile e ++ p ⟩⟩ s , σ , k ≡ ⟨⟨ p ⟩⟩ (n ∷ s), σ , k')
-
--- booleans
-adeq' .𝔹 s (B x) p σ n eq = {!!} 
-adeq' .𝔹 s (¬ x) p σ n eq = {!!}
-adeq' .𝔹 s (x & y) p σ n eq = {!!}
-adeq' .𝔹 s (x ∥ y)  p σ n eq = {!!}
-
--- naturals
-adeq' .ℕ s (N x) p σ .x refl = suc x , x , refl -- just x ≡ just x 
-
--- variables
-adeq' .ℕ s (V x) p σ n eq = {!!}
-
--- addition
-adeq' .ℕ s (e ⊕ e₁) p σ n eq = {!!}
-
--- subtraction
-adeq' .ℕ s (e ⊝ e₁) p σ n eq = {!!}
-
--- if/else
-adeq' .ℕ s (if_then_else e e₁ e₂) p σ n eq = {!!}

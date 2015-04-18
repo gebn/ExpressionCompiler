@@ -25,11 +25,11 @@ sound' : (T : Set)(s : Stack) (e : Exp T) (p : Program) (n : ℕ) (σ : State) (
 -- booleans
 sound' .𝔹 s (B x) p n σ k k' eq = {!!}
 
-sound' .𝔹 s (¬ x) p n σ k k' eq = ?
+sound' .𝔹 s (¬ x) p n σ k k' eq = {!!}
 
-sound' .𝔹 s (x & y) p n σ k k' eq = ?
+sound' .𝔹 s (x & y) p n σ k k' eq = {!!}
 
-sound' .𝔹 s (x ∥ y) p n σ k k' eq = ?
+sound' .𝔹 s (x ∥ y) p n σ k k' eq = {!!}
 
 -- naturals
 sound' .ℕ s (N x) p n σ k k' eq = {!!}
@@ -44,7 +44,7 @@ sound' .ℕ s (e ⊕ e₁) p n σ k k' eq = {!!}
 sound' .ℕ s (e ⊝ e₁) p n σ k k' eq = {!!}
 
 --if/else
-sound' .ℕ s (if_then_else e e₁ e₂) p n σ k k' eq = {!!} 
+sound' .ℕ s (if_then_else e e₁ e₂) p n σ k k' eq = {!!}
 
 
 {-
@@ -72,7 +72,6 @@ sound t e p n σ k eq = sound' t [] e [] n σ k (suc 0) fact
     ∎
 
 {-
---ORIGINAL PROOFS
 -- booleans
 sound .𝔹 (B x) p n σ zero ()    -- just [] ≡ just (n ∷ []) is false
 sound .𝔹 (B x) p n σ (suc k) () -- nothing ≡ just (n ∷ []) is false
